@@ -1,41 +1,27 @@
 //https://www.apollographql.com/docs/apollo-server/getting-started/
 
 const { ApolloServer, gql } = require("apollo-server");
+const mongoose = require("mongoose");
+//DB connection
+const { MONGODB } = require("./config.js");
+
+//models
+const Post = require("./models/Post");
 
 //type definitions (schema) it how the data would look
-const typeDefs = gql`
-  # Comments
-  type Book {
-    title: String
-    author: String
-  }
-
-  # The "Query" type is special: it lists all of the available queries that
-  # clients can execute, along with the return type for each. In this
-  # case, the "books" query returns an array of zero or more Books (defined above).
-  type Query {
-    books: [Book]
-  }
-`;
-
-//data this simulate the DB
-const books = [
-  {
-    title: "The Awakening",
-    author: "Kate Chopin",
-  },
-  {
-    title: "City of Glass",
-    author: "Paul Auster",
-  },
-];
+const typeDefs = require("./graphql/typeDefs");
 
 //Resolver
-// Resolvers define the technique for fetching the types defined in the
-// schema. This resolver retrieves books from the "books" array above.
 const resolvers = {
   Query: {
-    books: () => books,
+    async getPosts() {
+      try {
+        const posts = await Post.find();
+        return posts;
+      } catch (error) {
+        throw new Error(error);
+      }
+    },
   },
 };
 
@@ -43,7 +29,15 @@ const resolvers = {
 // definition and your set of resolvers.
 const server = new ApolloServer({ typeDefs, resolvers });
 
-// The `listen` method launches a web server.
-server.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
-});
+mongoose
+  .connect(MONGODB, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log("MongoDB Connected!");
+    return server.listen({ port: 5000 });
+  })
+  .then((res) => {
+    console.log(`Server running at ${res.url}`);
+  })
+  .catch((err) => {
+    console.error(err);
+  });
