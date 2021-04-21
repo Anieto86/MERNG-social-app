@@ -1,14 +1,34 @@
 const { gql } = require("apollo-server");
 
 module.exports = gql`
-  # Comments
   type Post {
     id: ID!
-    username: String!
-    body: String!
+    body: String
     createdAt: String!
+    username: String
+  }
+  type User {
+    id: ID!
+    email: String!
+    token: String!
+    username: String!
+    createdAt: String!
+  }
+  # input is a type of type that give an input to the resolver
+  input RegisterInput {
+    username: String
+    password: String
+    confirmPassword: String
+    email: String
   }
   type Query {
     getPosts: [Post]
+  }
+  #Autentication
+  #Mutation for do a change in the DB
+  type Mutation {
+    #input for users, so RegisterInput is the new type for handle more fields
+    register(registerInput: RegisterInput): User! # this Ex return the type User
+    login(username: String!, password: String!): User!
   }
 `;
