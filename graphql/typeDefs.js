@@ -23,6 +23,8 @@ module.exports = gql`
   }
   type Query {
     getPosts: [Post]
+    #query (      ):  return
+    getPost(postId: ID): Post
   }
   #Autentication
   #Mutation for do a change in the DB
@@ -30,5 +32,7 @@ module.exports = gql`
     #input for users, so RegisterInput is the new type for handle more fields
     register(registerInput: RegisterInput): User! # this Ex return the type User
     login(username: String!, password: String!): User!
+    createPost(body: String!): Post!
+    deletePost(postId: ID!): String!
   }
 `;
