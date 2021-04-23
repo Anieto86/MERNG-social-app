@@ -1,22 +1,50 @@
 import React from "react";
 import { gql, useQuery } from "@apollo/client";
 
-const Home = () => {
-  const {
-    loading,
-    error,
-    data: { getPosts: posts },
-  } = useQuery(FETCH_POST_QUERY);
+import { makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
 
-  if (loading) return "Loading...";
-  if (error) return `Error! ${error.message}`;
-  if (data) {
-    console.log(data);
-  }
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+  },
+}));
+
+const Home = () => {
+  const classes = useStyles();
+
+  // const {
+  //   loading,
+  //   error,
+  //   //desectructurar y poner el numbre que quera
+  //   data,
+  // } = useQuery(FETCH_POST_QUERY);
+
+  // if (loading) return "Loading...";
+  // if (error) return `Error! ${error.message}`;
+  // if (data) {
+  //   console.log(data);
+  // }
 
   return (
     <div>
-      <h1>home</h1>
+      <Grid container spacing={4}>
+        <Grid item xs={6} sm={3}>
+          <Paper className={classes.paper}>xs=6 sm=3</Paper>
+        </Grid>
+        <Grid item xs={6} sm={3}>
+          <Paper className={classes.paper}>xs=6 sm=3</Paper>
+        </Grid>
+        <Grid item xs={6} sm={3}>
+          <Paper className={classes.paper}>xs=6 sm=3</Paper>
+        </Grid>
+      </Grid>
     </div>
   );
 };
