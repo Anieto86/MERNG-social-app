@@ -2,7 +2,11 @@ import React from "react";
 import { gql, useQuery } from "@apollo/client";
 
 const Home = () => {
-  const { loading, error, data } = useQuery(FETCH_POST_QUERY);
+  const {
+    loading,
+    error,
+    data: { getPosts: posts },
+  } = useQuery(FETCH_POST_QUERY);
 
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
