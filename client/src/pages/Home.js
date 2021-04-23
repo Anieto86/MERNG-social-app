@@ -5,6 +5,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 
+import PostCard from "./components/PostCard";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -49,26 +51,26 @@ const Home = () => {
   );
 };
 
-const FETCH_POST_QUERY = gql`
-  {
-    getPost {
-      id
-      body
-      createdAt
-      username
-      likeCount
-      likes {
-        username
-      }
-      commentCount
-      comments {
-        id
-        username
-        createdAt
-        body
-      }
-    }
-  }
-`;
+// const FETCH_POST_QUERY = gql`
+//   {
+//     getPost {
+//       id
+//       body
+//       createdAt
+//       username
+//       likeCount
+//       likes {
+//         username
+//       }
+//       commentCount
+//       comments {
+//         id
+//         username
+//         createdAt
+//         body
+//       }
+//     }
+//   }
+// `;
 
-export default Home;
+// export default Home;
